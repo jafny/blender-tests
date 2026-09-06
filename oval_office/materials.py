@@ -673,10 +673,20 @@ def books(name="Books"):
     if name in _cache:
         return _cache[name]
     m, nt, out = _new(name)
-    oi = _node(nt, "ShaderNodeObjectInfo", (-600, 0))
-    ramp = _ramp(nt, [(0.0, col("#5a1e1e")), (0.2, col("#1e2e4a")), (0.4, col("#2e4a2a")), (0.6, col("#4a3520")),
-                      (0.8, col("#7a2a2a")), (1.0, col("#1a1a1a"))], (-300, 0), 'CONSTANT')
-    nt.links.new(oi.outputs["Random"], ramp.inputs[0])
+    tc = _node(nt, "ShaderNodeTexCoord", (-1000, 0))
+    sep = _node(nt, "ShaderNodeSeparateXYZ", (-800, 0))
+    nt.links.new(tc.outputs["Object"], sep.inputs[0])
+    sx = _math(nt, 'SNAP', sep.outputs["X"], val_b=0.033, loc=(-650, 100))
+    sz = _math(nt, 'SNAP', sep.outputs["Z"], val_b=0.38, loc=(-650, -100))
+    comb = _node(nt, "ShaderNodeCombineXYZ", (-500, 0))
+    nt.links.new(sx.outputs[0], comb.inputs[0])
+    nt.links.new(sz.outputs[0], comb.inputs[2])
+    wn = _node(nt, "ShaderNodeTexWhiteNoise", (-350, 0))
+    wn.noise_dimensions = '3D'
+    nt.links.new(comb.outputs[0], wn.inputs["Vector"])
+    ramp = _ramp(nt, [(0.0, col("#6a2222")), (0.15, col("#22345a")), (0.3, col("#2e5a30")), (0.45, col("#5a3c22")),
+                      (0.6, col("#8a2e2e")), (0.72, col("#1c1c1c")), (0.85, col("#a08a5a")), (1.0, col("#3a2a5a"))], (-200, 0), 'CONSTANT')
+    nt.links.new(wn.outputs["Value"], ramp.inputs[0])
     p = _principled(nt, **{"Roughness": 0.6})
     nt.links.new(ramp.outputs[0], p.inputs["Base Color"])
     nt.links.new(p.outputs[0], out.inputs[0])
@@ -735,14 +745,14 @@ def lawn(name="Lawn"):
 def lib():
     """Build the shared material library."""
     L = {}
-    L["wall"] = paint("WallPaint", col("#ece4d4"), rough=0.6, bump=0.04)
+    L["wall"] = paint("WallPaint", col("#f0e9dc"), rough=0.6, bump=0.04)
     L["trim"] = paint("TrimWhite", col("#f7f4ec"), rough=0.3, bump=0.01, spec=0.5)
     L["ceiling"] = paint("Ceiling", col("#f6f2ea"), rough=0.7, bump=0.02)
     L["plaster"] = paint("Plaster", col("#f4f0e6"), rough=0.5, bump=0.02)
     L["parquet"] = parquet()
     L["rug"] = rug()
     L["oak"] = wood("Oak", col("#b07a3c"), col("#6a4220"), scale=2.5)
-    L["oak_dark"] = wood("OakDark", col("#7a4a22"), col("#3d2410"), scale=2.5, rough=0.3, coat=0.35)
+    L["oak_dark"] = wood("OakDark", col("#6e4420"), col("#472a12"), scale=6.0, stretch=(1.0, 6.0, 1.0), rough=0.3, coat=0.35)
     L["mahogany"] = wood("Mahogany", col("#5a2a16"), col("#2e140a"), scale=3.0, rough=0.25, coat=0.4)
     L["walnut"] = wood("Walnut", col("#5e3a22"), col("#2b1a0e"), scale=3.0, rough=0.3, coat=0.3)
     L["marble"] = marble()

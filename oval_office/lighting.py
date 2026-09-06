@@ -120,7 +120,7 @@ def stills():
 
 # ------------------------------------------------------------------ flythrough
 FLY_FPS = 24
-FLY_FRAMES = 360
+FLY_FRAMES = 300
 # (frame, camera position, aim position)
 FLY_KEYS = [
     (1,   (-3.0, 3.35, 1.65), (0.6, -2.4, 1.0)),
@@ -145,7 +145,9 @@ def flythrough(scene):
     c.target = aim
     c.track_axis = 'TRACK_NEGATIVE_Z'
     c.up_axis = 'UP_Y'
+    scale = FLY_FRAMES / 360.0
     for f, loc, a in FLY_KEYS:
+        f = 1 + round((f - 1) * scale)
         cam.location = loc
         cam.keyframe_insert("location", frame=f)
         aim.location = a
@@ -178,16 +180,16 @@ def render_settings(scene, samples=128, res=(1920, 1080), pct=100, animation=Fal
     c.device = 'CPU'
     c.samples = samples
     c.use_adaptive_sampling = True
-    c.adaptive_threshold = 0.02 if animation else 0.01
-    c.adaptive_min_samples = 16
+    c.adaptive_threshold = 0.05 if animation else 0.01
+    c.adaptive_min_samples = 8 if animation else 16
     c.use_denoising = True
     c.denoiser = 'OPENIMAGEDENOISE'
     c.denoising_input_passes = 'RGB_ALBEDO_NORMAL'
     c.denoising_prefilter = 'ACCURATE'
     c.max_bounces = 10
-    c.diffuse_bounces = 4
-    c.glossy_bounces = 4
-    c.transmission_bounces = 8
+    c.diffuse_bounces = 3
+    c.glossy_bounces = 3
+    c.transmission_bounces = 6
     c.transparent_max_bounces = 8
     c.volume_bounces = 0
     c.sample_clamp_direct = 0.0
@@ -207,6 +209,6 @@ def render_settings(scene, samples=128, res=(1920, 1080), pct=100, animation=Fal
     vs = scene.view_settings
     vs.view_transform = 'AgX'
     vs.look = 'AgX - Medium High Contrast'
-    vs.exposure = 0.0
+    vs.exposure = 0.25
     vs.gamma = 1.0
     scene.display_settings.display_device = 'sRGB'

@@ -380,9 +380,11 @@ def build_exterior(M):
         p = ell_pt(t, -r, 0)
         h = rnd.uniform(7, 12)
         tm.add_cyl((p.x, p.y, h * 0.45), 0.25, h * 0.9, 10)
-        for k in range(5):
-            lm.add_sphere((p.x + rnd.uniform(-1.8, 1.8), p.y + rnd.uniform(-1.8, 1.8), h * 0.85 + rnd.uniform(-1.2, 1.6)),
-                          rnd.uniform(1.6, 2.6), 16, 8)
+        for k in range(14):
+            ang = rnd.uniform(0, TAU)
+            rr = rnd.uniform(0, 2.4)
+            lm.add_sphere((p.x + rr * math.cos(ang), p.y + rr * math.sin(ang), h * 0.85 + rnd.uniform(-1.8, 1.6)),
+                          rnd.uniform(0.9, 1.5), 20, 10)
     tm.build("TreeTrunks", M["walnut"], "Exterior", smooth=True)
     lm.build("TreeCanopy", M["foliage"], "Exterior", smooth=True)
     # Rose Garden colonnade outside the east door
