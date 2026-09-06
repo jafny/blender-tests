@@ -279,7 +279,7 @@ def outside():
              ((10.5, -5.5), 5.5, (-0.3, 0.2), "pink", 0.9), ((0.5, 10.5), 5.2, (0.5, 0.3), "yellow", 0.85)]
     for i, (b, h, ln, pm, r) in enumerate(trees):
         truffula(f"Truffula{i}", b, h, ln, pm, r)
-    cm = M.glow_paint("Cloud", "white", strength=0.6, rough=0.9)
+    cm = M.matte("Cloud", "white", rough=0.9)
     clouds = [(4, 14, 8.5), (-9, 12, 10), (14, 4, 9), (-6, -14, 9.5), (18, -8, 11), (-16, 0, 10.5), (8, -16, 8.8)]
     for i, (cx, cy, cz) in enumerate(clouds):
         for j in range(5):

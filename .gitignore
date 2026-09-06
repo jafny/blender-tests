@@ -2,3 +2,4 @@ __pycache__/
 *.pyc
 renders/frames/
 *.blend1
+renders/seuss_frames/

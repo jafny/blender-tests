@@ -95,13 +95,13 @@ def camera(name, loc, aim, lens=24, fstop=None, focus=None, sensor=36):
 STILLS = {
     # name: (location, aim, lens, fstop)
     "01_hero_wide":      ((2.6, -3.1, 1.75), (-0.6, 1.6, 1.2), 20, None),
-    "02_cabinet_run":    ((-0.2, -0.9, 1.5), (-1.4, 3.2, 1.35), 24, None),
+    "02_cabinet_run":    ((0.2, 0.7, 1.6), (-1.3, 3.3, 1.3), 18, None),
     "03_sink_window":    ((0.9, 0.9, 1.35), (0.05, 3.3, 1.35), 30, 4.0),
     "04_stove_hood":     ((-0.9, 1.15, 1.45), (-2.35, 3.2, 1.35), 28, None),
     "05_fridge_corner":  ((1.3, 0.9, 1.45), (3.35, 3.0, 1.25), 26, None),
     "06_table_chairs":   ((-2.9, -2.6, 1.35), (0.5, -0.3, 0.8), 26, 5.6),
     "07_from_door":      ((-3.9, -1.2, 1.6), (1.5, 1.4, 1.1), 18, None),
-    "08_shelves_clock":  ((0.6, -2.2, 1.4), (4.6, 0.3, 1.9), 26, None),
+    "08_shelves_clock":  ((2.2, -2.8, 1.5), (4.7, -0.2, 1.8), 26, None),
 }
 
 
@@ -114,7 +114,7 @@ FLY_FPS = 24
 FLY_FRAMES = 300
 # (frame, camera position, aim position) - a slow glide from the door, along the counter, round the table
 FLY_KEYS = [
-    (1,   (-3.9, -2.3, 1.7), (0.3, 1.5, 1.2)),
+    (1,   (-3.3, -2.5, 1.7), (0.3, 1.5, 1.2)),
     (60,  (-2.6, -1.0, 1.6), (-1.8, 3.0, 1.3)),
     (115, (-0.9, 0.6, 1.45), (-1.9, 3.2, 1.3)),
     (165, (1.0, 0.7, 1.4), (0.2, 3.3, 1.5)),
@@ -301,7 +301,7 @@ def render_settings(scene, samples=128, res=(1920, 1080), pct=100, animation=Fal
     c.caustics_reflective = False
     c.caustics_refractive = False
     c.blur_glossy = 1.0
-    c.use_light_tree = True
+    c.use_light_tree = False   # measured: slower than plain sampling for this scene
     c.use_fast_gi = True
     c.fast_gi_method = 'REPLACE'
     c.ao_bounces = 2

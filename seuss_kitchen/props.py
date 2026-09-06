@@ -270,7 +270,7 @@ def teapot(pos, color="yellow", stripe="red", scale=1.0):
     # steam curl
     st = [(x + 0.19 * s, y - 0.02 * s, z + 0.35 * s)]
     st += spiral2d((x + 0.10 * s, y - 0.02 * s, z + 0.55 * s), 0.16 * s, 0.03 * s, 1.1, n=30, plane='XZ')
-    tube("Teapot_steam", st, radius=0.025 * s, mat=M.glow_paint("Steam", "white", strength=0.4, rough=0.9),
+    tube("Teapot_steam", st, radius=0.025 * s, mat=M.matte("Steam", "#F4F6FF", rough=0.9),
          radii=[1.0] + [1.0 - 0.8 * (i / 30) for i in range(31)], collection=C, res=8)
 
 
