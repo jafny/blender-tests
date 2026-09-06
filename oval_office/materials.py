@@ -701,7 +701,14 @@ def foliage(name="Foliage"):
     bmp.inputs["Strength"].default_value = 0.6
     nt.links.new(nz.outputs["Fac"], bmp.inputs["Height"])
     nt.links.new(bmp.outputs[0], p.inputs["Normal"])
-    nt.links.new(p.outputs[0], out.inputs[0])
+    tr = _node(nt, "ShaderNodeBsdfTranslucent", (300, -200))
+    tr.inputs["Color"].default_value = col("#9fcf5a")
+    mix = _node(nt, "ShaderNodeMixShader", (500, 0))
+    mix.inputs[0].default_value = 0.4
+    nt.links.new(p.outputs[0], mix.inputs[1])
+    nt.links.new(tr.outputs[0], mix.inputs[2])
+    nt.links.new(mix.outputs[0], out.inputs[0])
+    out.location = (750, 0)
     _cache[name] = m
     return m
 

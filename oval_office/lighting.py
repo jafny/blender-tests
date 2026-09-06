@@ -196,6 +196,12 @@ def render_settings(scene, samples=128, res=(1920, 1080), pct=100, animation=Fal
     c.caustics_refractive = False
     c.blur_glossy = 1.0
     c.use_light_tree = True
+    c.use_fast_gi = True
+    c.fast_gi_method = 'REPLACE'
+    c.ao_bounces = 3
+    c.ao_bounces_render = 3
+    scene.world.light_settings.ao_factor = 0.8
+    scene.world.light_settings.distance = 3.0
     c.pixel_filter_type = 'BLACKMAN_HARRIS'
     c.filter_width = 1.5
     vs = scene.view_settings
