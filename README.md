@@ -8,8 +8,8 @@ generated from code.
 
 ## Deliverables
 
-* `renders/stills/*.png` — 1080p still renders from six cameras
-* `renders/flythrough.mp4` — 15 s camera flythrough (1280x720, 24 fps)
+* `renders/stills/*.png` — 1080p still renders from six cameras (Cycles, 128 spp + OIDN denoise)
+* `renders/flythrough.mp4` — 12.5 s camera flythrough (300 frames, 1280x720, 24 fps, 24 spp + OIDN denoise)
 
 ## Layout
 
@@ -31,8 +31,8 @@ pip install bpy==4.2.0 imageio-ffmpeg
 cd oval_office
 python3 build_scene.py --out ../oval_office.blend        # save a .blend to open in Blender
 python3 render.py stills --samples 256 --res 1920 1080   # stills -> renders/stills
-python3 render.py anim --samples 64 --res 1280 720       # frames -> renders/frames
-ffmpeg -framerate 24 -i ../renders/frames/frame_%04d.png -c:v libx264 -pix_fmt yuv420p -crf 18 ../renders/flythrough.mp4
+python3 render.py anim --samples 24 --res 1280 720       # frames -> renders/frames
+./encode.sh                                              # frames -> renders/flythrough.mp4
 ```
 
 The scripts also run inside a full Blender install: `blender -b -P oval_office/build_scene.py -- --out scene.blend`.
