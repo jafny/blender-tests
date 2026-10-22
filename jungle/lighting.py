@@ -130,7 +130,7 @@ def set_shots(spots):
         # name: (location, aim, lens, fstop, focus)
         "01_hero_river":    ((rx(-16) + 0.6, -16.0, 2.1), (rx(14) - 0.5, 18.0, 4.4), 22, None, None),
         "02_waterfall":     ((f.x + 3.5, f.y - 13.0, 1.5), (f.x - 0.3, f.y + 2.5, 5.2), 28, None, None),
-        "03_temple":        ((t.x + 9.5, t.y - 8.5, 2.4), (t.x - 0.5, t.y + 0.5, 3.6), 24, None, None),
+        "03_temple":        ((t.x + 11.0, t.y - 9.5, 3.4), (t.x - 0.5, t.y + 0.5, 3.0), 24, None, None),
         "04_kapok_roots":   ((k.x - 4.5, k.y - 7.5, 1.0), (k.x, k.y, 5.5), 18, None, None),
         "05_forest_floor":  ((spots["floor"].x, spots["floor"].y, spots["floor"].z), (spots["floor_aim"].x, spots["floor_aim"].y, spots["floor_aim"].z), 50, 2.8, None),
         "06_log_bridge":    ((lg.x - 4.5, lg.y - 7.5, 1.4), (lg.x + 0.5, lg.y + 0.5, 0.9), 26, None, None),
