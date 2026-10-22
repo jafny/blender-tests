@@ -1,10 +1,83 @@
 # Blender procedural sets
 
-Two fully procedural Blender scenes generated with the `bpy` 4.2 Python module (Cycles, CPU).
+Three fully procedural Blender scenes generated with the `bpy` 4.2 Python module (Cycles, CPU).
 No external textures or assets: every material is a node graph and every object is built from code.
 
+* [Jungle](#jungle) — `jungle/`
 * [Dr. Seuss kitchen](#dr-seuss-kitchen) — `seuss_kitchen/`
 * [Oval Office replica](#oval-office--procedural-blender-replica) — `oval_office/`
+
+# Jungle
+
+A lush, fully procedural rainforest set: a river winds up a valley to a pool fed by a waterfall pouring
+off a mossy basalt cliff; an overgrown Maya-style stepped temple with a strangler fig gripping its tiers
+stands on the west bank beside a half-buried colossal stone head; a giant kapok (ceiba) with plank
+buttress roots towers over the east bank; a mossy fallen log bridges the river. Thousands of ferns,
+palms, bananas, heliconias, elephant ears, bromeliads, sedges and seedlings carpet the floor under a
+canopy of rainforest trees, lianas loop down from the limbs, roots and vines curtain the cliff, a humid
+haze catches the sunbeams, and blue morpho butterflies flutter through.
+
+## Deliverables
+
+* `jungle.blend` — the scene (cameras, flythrough animation, animated water and render settings included)
+* `renders/jungle_stills/*.png` — 1080p stills from eight cameras (Cycles + OIDN denoise)
+* `renders/jungle_flythrough.mp4` — camera flythrough along the river, past the temple, up to the falls
+
+## Layout
+
+```
+jungle/
+  helpers.py      mesh builder with attributes, parallel-transport tubes, the leaf generator, GN point instancer, scatter
+  materials.py    leaves (veins, edge burn, translucency), bark, palm trunk, stone (+carvings, moss, wet line), forest floor, water, falls, foam, haze, mist, morpho wings
+  terrain.py      river valley heightfield, pool, cliff + plunge alcove, waterfall sheets, foam, spray, boulders, cliff outcrops, fallen log
+  plants.py       fern, palm, banana, heliconia, elephant ear, bromeliad, seedling, sedge, leaf litter, leaf sprays, canopy trees, the kapok
+  ruins.py        stepped pyramid of individual eroded blocks, stairway, corbel-vaulted shrine + roof comb, collapse + rubble, stelae, colossal head
+  vines.py        lianas, cliff root curtain, strangler fig on the temple, leafy climbers
+  fauna.py        flapping blue morpho butterflies
+  lighting.py     Nishita sky, sun, canopy bounce, sun fleck, haze volume, cameras, flythrough, texture animation, Cycles settings
+  build_scene.py  asset library + scattering (keep-out zones around cameras/flight path), assembles the scene
+  render.py       renders stills / animation frames
+  encode.sh       frames -> mp4
+```
+
+## Reproduce
+
+```bash
+pip install bpy==4.2.0 imageio-ffmpeg     # bpy 4.2 needs Python 3.11
+cd jungle
+python3 build_scene.py --out ../jungle.blend                                   # ~30 s, saves the .blend
+python3 render.py stills --samples 96 --res 1920 1080 --out ../renders/jungle_stills
+python3 render.py anim --samples 10 --res 960 540 --out ../renders/jungle_frames
+./encode.sh ../renders/jungle_frames ../renders/jungle_flythrough.mp4
+python3 render.py stills --quick --samples 16 --res 640 360 --out /tmp/preview   # fast layout preview (¼ of the plants)
+```
+
+## How it is made
+
+* **Leaves are geometry, not alpha cards.** `helpers.leaf()` grows a blade along a spine that droops,
+  twists and V-folds, with an optional heart lobe and lateral tears (banana leaves). Every vertex stores
+  `luv` = (along, across, per-leaf random) so the shader can draw the midrib, lateral veins, yellowed or
+  browned edges and per-leaf colour shifts; a translucent BSDF mixed in makes backlit leaves glow.
+* **Instancing keeps it light.** Each plant variant is built once (from a seed) into an excluded `Assets`
+  collection; scattered points carry `rot`/`scl` attributes and a geometry-nodes modifier instances the
+  asset on them. Canopy trees are whole collections (trunk + their own leaf-spray instancers), so the
+  instances nest. Hundreds of thousands of leaves cost only a few MB.
+* **Scattering with intent.** Dart-throwing with per-species rules — bananas and sedges hug the water,
+  trees stay out of the river corridor (the canopy gap lets light in), nothing grows on the temple, the
+  head or between the kapok's buttresses — plus keep-out discs around every camera, its first metres of
+  sightline and the flythrough path.
+* **Terrain** is one heightfield function shared by the mesh and the scatterer: a meandering channel,
+  a pool, banks rising into valley walls, a flattened temple plaza and a curved cliff with a plunge
+  alcove behind the falls; steep vertices are pushed around with 3D noise and dozens of boulder
+  outcrops break up the cliff face.
+* **The temple** is hundreds of individually eroded blocks (superellipse lofts with noise chipping) laid in
+  courses with jitter, missing stones, a collapsed corner whose blocks spill downhill, and a strangler
+  fig whose roots are traced over the stepped surface tier by tier.
+* **Water**: a refractive surface with a green absorption volume and flowing ripples, waterfall curtains
+  that roll over the lip and fall on a parabola with scrolling streaks and gaps, foam discs, a spray
+  volume and a light humid haze for sunbeams. Water, falls and foam textures are keyframed to flow.
+* **Light**: Nishita sky, a south-east sun, a soft green canopy-bounce area light (excluded from the
+  volume) and a sun-fleck spot for the forest-floor close-up; AgX view transform.
 
 # Dr. Seuss kitchen
 
