@@ -189,8 +189,9 @@ def build(quick=False):
         keep_small.add(loc[0], loc[1], 1.1)
         if name.startswith("05"):
             keep_big.add(loc[0], loc[1], 5.0)
+            keep_small.add(loc[0], loc[1], 1.6)
         if name.startswith("03"):            # clear foreground for the temple wide shot
-            keep_big.add(loc[0], loc[1], 4.0)
+            keep_big.add(loc[0], loc[1], 7.0)
             keep_small.add(loc[0], loc[1], 2.5)
         # keep the first few metres of each sightline clear of big plants
         d = Vector(aim) - Vector(loc)

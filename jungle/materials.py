@@ -496,8 +496,10 @@ def foam(name="Foam"):
     # radial falloff from object centre
     d = g.vmath('LENGTH', g.vmath('MULTIPLY', tc.outputs["Object"], (1.0, 1.0, 0.0)))
     fall = g.maprange(d, 0.95, 0.1, 0.0, 1.0, interp='SMOOTHSTEP')
-    a = g.math('MULTIPLY', g.math('ADD', g.maprange(nz.outputs[0], 0.4, 0.65), g.math('MULTIPLY', bub, 0.5)), fall, clamp=True)
-    white = g.principled(color="#EEF4F0", rough=0.5, sss=0.2)
+    streaky = g.maprange(nz.outputs[0], 0.48, 0.7)
+    a = g.math('MULTIPLY', g.math('ADD', streaky, g.math('MULTIPLY', bub, g.math('MULTIPLY', streaky, 0.8))), fall, clamp=True)
+    a = g.math('MULTIPLY', a, 0.85)
+    white = g.principled(color="#F4F8F6", rough=0.6, sss=0.3, emit="#E8F0F0", emit_s=0.05)
     tr = g.n("ShaderNodeBsdfTransparent")
     mx = g.n("ShaderNodeMixShader")
     g.link(a, mx.inputs[0])
