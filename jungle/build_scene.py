@@ -145,7 +145,7 @@ def vegetation(spots, keep_big, keep_small, quick=False):
     # hero plants for the macro shot
     fx, fy = FLOOR_PLANT
     H.instancer("Hero_Bromeliad", broms[1], [((fx, fy, T.height(fx, fy) - 0.02), (0, 0, 0.4), 1.5)], "Understory")
-    H.instancer("Hero_Fern", ferns[2], [((fx + 1.0, fy + 1.6, T.height(fx + 1.0, fy + 1.6) - 0.02), (0, 0, 1.0), 1.3),
+    H.instancer("Hero_Fern", ferns[2], [((fx + 1.4, fy + 2.2, T.height(fx + 1.4, fy + 2.2) - 0.02), (0, 0, 1.0), 1.3),
                                         ((fx - 1.4, fy + 1.9, T.height(fx - 1.4, fy + 1.9) - 0.02), (0, 0, 2.0), 1.1)], "Understory")
     H.instancer("Hero_Heliconia", helis[0], [((fx + 0.2, fy + 2.4, T.height(fx + 0.2, fy + 2.4) - 0.02), (0, 0, 0.0), 1.2)], "Understory")
     # epiphytes on the fallen log
@@ -174,8 +174,8 @@ def build(quick=False):
     spots = {
         "temple": ru["top"], "kapok": Vector((KAPOK.x, KAPOK.y, kz)), "falls": falls_foot, "log": lc, "log_pts": logpts,
         "stair_foot": ru["stair_foot"], "head": ru["head"],
-        "floor": Vector((fx - 0.7, fy - 1.6, T.height(fx - 0.7, fy - 1.6) + 0.45)),
-        "floor_aim": Vector((fx, fy, T.height(fx, fy) + 0.3)),
+        "floor": Vector((fx - 0.6, fy - 1.4, T.height(fx - 0.6, fy - 1.4) + 0.85)),
+        "floor_aim": Vector((fx, fy, T.height(fx, fy) + 0.2)),
         "brom_top": Vector((fx + 0.05, fy - 0.02, T.height(fx, fy) + 0.36)),
         "falls_view": falls_foot + Vector((2.0, -6.0, 0.0)),
         "kapok_front": Vector((KAPOK.x - 6, KAPOK.y - 4, T.height(KAPOK.x - 6, KAPOK.y - 4))),
