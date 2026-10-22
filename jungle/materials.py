@@ -350,7 +350,7 @@ def stone(name="Stone", c0="#5E5A4E", c1="#8C8574", c2="#A69E88", moss=1.0, scal
     n1 = g.noise(obj, 1.2 * scale, 8.0, 0.62, dist=0.3)
     vor = g.voronoi(obj, 2.5 * scale, 'F1')
     cr = g.voronoi(obj, 1.6 * scale, 'DISTANCE_TO_EDGE')
-    cracks = g.math('MULTIPLY', g.maprange(cr.outputs[0], 0.0, 0.012, 1.0, 0.0),
+    cracks = g.math('MULTIPLY', g.maprange(cr.outputs[0], 0.0, 0.005, 0.6, 0.0),
                     g.maprange(g.noise(obj, 0.8 * scale, 2.0, 0.5).outputs[0], 0.45, 0.6))
     h = g.math('ADD', g.math('MULTIPLY', n1.outputs[0], 0.75), g.math('MULTIPLY', vor.outputs[0], 0.25))
     c = g.ramp(h, [(0.3, c0), (0.55, c1), (0.75, c2)])
