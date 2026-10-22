@@ -322,8 +322,8 @@ def litter_patch(seed, size=1.6, n=70):
         az = r.uniform(0, H.TAU)
         L = r.uniform(0.07, 0.2)
         d = Vector((math.cos(az), math.sin(az), r.uniform(-0.05, 0.12))).normalized()
-        H.leaf(mb, Vector((x, y, 0.012 + r.uniform(0, 0.02))), d, L, L * r.uniform(0.3, 0.55), ovate, nu=4, nv=1,
-               droop=r.uniform(-0.4, 0.3), fold=r.uniform(-0.3, 0.4), curl=r.uniform(0, 0.4), side_up=UP)
+        H.leaf(mb, Vector((x, y, 0.012 + r.uniform(0, 0.02))), d, L, L * r.uniform(0.3, 0.55), ovate, nu=7, nv=2,
+               droop=r.uniform(-0.3, 0.2), fold=r.uniform(-0.15, 0.2), curl=r.uniform(0, 0.3), side_up=UP)
     return _finish(mb, f"Litter_{seed}", [M.leaf("litter", "litter", gloss=0.5)])
 
 
