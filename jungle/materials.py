@@ -443,7 +443,7 @@ def water(name="Water"):
     h = g.math('ADD', r1.outputs[0], g.math('MULTIPLY', r2.outputs[0], 0.35))
     bmp = g.bump(h, 0.25, 0.08)
     pr = g.principled(color="#16241A", rough=0.04, ior=1.33, trans=1.0, spec=0.6, normal=bmp)
-    vol = g.n("ShaderNodeVolumeAbsorption", inputs={"Color": "#3C6A42", "Density": 0.9})
+    vol = g.n("ShaderNodeVolumeAbsorption", inputs={"Color": "#5E8A5A", "Density": 0.35})
     g.link(pr, out.inputs["Surface"])
     g.link(vol.outputs[0], out.inputs["Volume"])
     m.cycles.volume_sampling = 'EQUIANGULAR'
