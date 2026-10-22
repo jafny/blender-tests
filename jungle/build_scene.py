@@ -130,7 +130,7 @@ def vegetation(spots, keep_big, keep_small, quick=False):
     pts = H.scatter(lambda x, y: land(x, y, 0.3, 0.9) and free(x, y, 5.5, 0.3) and keep_big.ok(x, y, 0.7), NEAR, int(320 * q), 5, 1.4)
     spread("ElephantEars", ears, place(pts, r, -0.02, (0.8, 1.3), 0.1), "Understory", r)
     # ferns: the main ground cover (also on the plaza, ledges and the plateau)
-    pts = H.scatter(lambda x, y: land(x, y, 0.2, 1.4) and free(x, y, 4.6, -0.6) and keep_small.ok(x, y), A_, int(2600 * q), 6, 0.7)
+    pts = H.scatter(lambda x, y: land(x, y, 0.2, 1.4) and free(x, y, 6.0, -0.6) and keep_small.ok(x, y), A_, int(2600 * q), 6, 0.7)
     spread("Ferns", ferns, place(pts, r, -0.02, (0.7, 1.4), 0.15), "Understory", r)
     pts = H.scatter(lambda x, y: land(x, y, 0.2, 1.2) and free(x, y, 4.6, 0.0) and keep_small.ok(x, y, 0.5), NEAR, int(500 * q), 7, 0.6)
     spread("Bromeliads", broms, place(pts, r, -0.01, (0.8, 1.5), 0.15), "Understory", r)
@@ -199,6 +199,8 @@ def build(quick=False):
             d.normalize()
             for s in (2.0, 4.0):
                 keep_big.add(loc[0] + d.x * s, loc[1] + d.y * s, 1.8)
+            for s in (1.2, 2.4):
+                keep_small.add(loc[0] + d.x * s, loc[1] + d.y * s, 0.9)
     fly = [k[1] for k in L.FLY_KEYS]
     for a, b in zip(fly, fly[1:]):
         for i in range(8):
